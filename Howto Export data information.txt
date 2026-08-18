@@ -1,0 +1,8 @@
+Howto Export From MiS Database 
+First field Machine ID unique number for entry into database table
+Second field Member ID number, same as on RDIF system
+Third field Status, good is good
+Fourth field actual machine – sorry text field
+Fifth field Trainer ID (same a Member ID)
+Sixth field whether that person is a trainer
+Seventh field date trained.

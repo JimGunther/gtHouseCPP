@@ -1,0 +1,318 @@
+1,3,"Good","Bandsaw",19,1,2/3/2017 00:00:00
+2,3,"Good","Cross Cut Saw",19,1,12/5/2022 00:00:00
+3,3,"Good","Scroll Saw",17,1,5/11/2018 00:00:00
+4,3,"Good","Bench Grinder",19,1,7/6/2018 00:00:00
+5,3,"Good","Biscuit Jointer",17,1,6/1/2023 00:00:00
+6,3,"Good","Circular Saw",8,1,6/1/2022 00:00:00
+7,3,"Good","CNC",95,1,6/1/2023 00:00:00
+8,3,"Good","Computer",3,1,8/2/2016 00:00:00
+10,3,"Good","Disc Sander",19,1,12/5/2022 00:00:00
+12,3,"Good","Jigsaw",19,1,7/6/2018 00:00:00
+13,3,"Good","Lasercutter",110,1,6/1/2024 00:00:00
+14,3,"Good","Pillar Drill",19,1,2/2/2017 00:00:00
+16,3,"Good","Plunge Router",19,1,5/3/2018 00:00:00
+17,3,"Good","Router Table",19,1,5/3/2018 00:00:00
+18,3,"Good","Sliding Compound Saw",19,1,7/6/2018 00:00:00
+19,3,"Good","Table Saw",3,1,7/11/2019 00:00:00
+23,19,"Good","Scroll Saw",17,1,6/1/2025 00:00:00
+28,19,"Good","Computer",3,1,6/1/2025 00:00:00
+29,19,"Good","DeWalt Ticknesser",17,1,6/1/2025 00:00:00
+30,19,"Good","Disc Sander",17,1,6/1/2025 00:00:00
+31,19,"Good","Jet Mortise",17,1,6/1/2025 00:00:00
+32,19,"Good","Jigsaw",17,1,6/1/2025 00:00:00
+34,19,"Good","Pillar Drill",17,1,6/1/2025 00:00:00
+35,19,"Good","Planer / Thicknesser",17,1,6/1/2025 00:00:00
+36,19,"Good","Plunge Router",17,1,6/1/2025 00:00:00
+37,19,"Good","Router Table",17,1,6/1/2025 00:00:00
+38,19,"Good","Sliding Compound Saw",17,1,6/1/2025 00:00:00
+39,19,"Good","Table Saw",17,1,6/1/2025 00:00:00
+40,19,"Good","Woodturning Lathe",87,1,6/1/2025 00:00:00
+41,3,"Good","3D Printer",110,1,6/1/2024 00:00:00
+42,172,"Good","Computer",3,0,22/12/2025 00:00:00
+43,153,"Good","Bandsaw",17,0,17/5/2024 00:00:00
+44,153,"Good","MiS Induction",3,0,10/5/2024 00:00:00
+45,84,"Good","MiS Induction",3,1,7/2/2021 00:00:00
+46,84,"Good","Table Saw",8,0,23/6/2021 00:00:00
+47,84,"Good","Bandsaw",8,0,23/6/2021 00:00:00
+48,84,"Good","Sliding Compound Saw",8,0,30/6/2021 00:00:00
+49,84,"Good","Woodturning Lathe",87,0,4/8/2022 00:00:00
+50,164,"Good","MiS Induction",3,0,28/10/2024 00:00:00
+51,164,"Good","Bandsaw",19,0,3/12/2024 00:00:00
+52,164,"Good","Sliding Compound Saw",19,0,3/12/2024 00:00:00
+53,164,"Good","Disc Sander",19,0,18/11/2024 00:00:00
+54,164,"Good","Pillar Drill",19,0,18/3/2025 00:00:00
+55,134,"Good","MiS Induction",3,0,15/8/2023 00:00:00
+56,134,"Good","Table Saw",19,0,21/8/2023 00:00:00
+57,134,"Good","Bandsaw",17,0,11/6/2023 00:00:00
+58,134,"Good","Sliding Compound Saw",19,0,21/8/2023 00:00:00
+59,134,"Good","Router Table",19,0,4/10/2023 00:00:00
+60,134,"Good","Planer / Thicknesser",17,0,11/6/2024 00:00:00
+61,134,"Good","Bench Grinder",87,0,28/4/2025 00:00:00
+62,80,"Good","MiS Induction",0,0,30/3/2020 00:00:00
+63,80,"Good","Disc Sander",19,0,20/5/2025 00:00:00
+64,8,"Good","MiS Induction",3,1,27/2/2016 00:00:00
+65,8,"Good","Table Saw",17,1,6/11/2016 00:00:00
+66,8,"Good","Bandsaw",17,1,3/8/2016 00:00:00
+67,8,"Good","Sliding Compound Saw",17,1,15/1/2020 00:00:00
+68,8,"Good","Plunge Router",17,1,23/8/2018 00:00:00
+69,8,"Good","Router Table",17,1,25/8/2016 00:00:00
+70,8,"Good","DeWalt Ticknesser",17,1,3/8/2017 00:00:00
+71,8,"Good","Planer / Thicknesser",17,1,9/8/2016 00:00:00
+72,8,"Good","Bench Grinder",17,1,17/2/2017 00:00:00
+73,8,"Good","Disc Sander",17,1,15/1/2020 00:00:00
+74,8,"Good","Circular Saw",19,1,15/1/2023 00:00:00
+75,8,"Good","Jigsaw",19,1,15/1/2023 00:00:00
+76,3,"Good","MiS Induction",19,1,8/2/2016 00:00:00
+77,95,"Good","MiS Induction",95,1,14/2/2022 00:00:00
+78,95,"Good","Bandsaw",3,1,21/2/2022 00:00:00
+79,95,"Good","Router Table",19,1,25/4/2022 00:00:00
+80,95,"Good","DeWalt Ticknesser",19,1,21/11/2022 00:00:00
+81,95,"Good","Planer / Thicknesser",19,1,21/11/2022 00:00:00
+82,95,"Good","CNC",95,1,1/7/2023 00:00:00
+83,95,"Good","Lasercutter",110,1,19/9/2025 00:00:00
+84,95,"Good","Table Saw",3,1,21/2/2022 00:00:00
+85,11,"Good","MiS Induction",3,0,31/7/2014 00:00:00
+86,11,"Good","Bandsaw",17,0,12/7/2022 00:00:00
+87,11,"Good","Sliding Compound Saw",17,0,16/5/2017 00:00:00
+88,11,"Good","Scroll Saw",3,0,5/4/2018 00:00:00
+89,11,"Good","Plunge Router",17,0,21/2/2017 00:00:00
+90,107,"Good","MiS Induction",3,0,26/9/2022 00:00:00
+91,107,"Good","Table Saw",19,0,6/10/2022 00:00:00
+92,107,"Good","Bandsaw",19,0,6/10/2022 00:00:00
+93,128,"Good","MiS Induction",3,0,27/4/2023 00:00:00
+94,128,"Good","Table Saw",8,0,4/5/2023 00:00:00
+95,128,"Good","Bandsaw",8,0,4/5/2023 00:00:00
+96,128,"Good","Sliding Compound Saw",3,0,2/5/2023 00:00:00
+97,128,"Good","Planer / Thicknesser",3,0,2/5/2023 00:00:00
+98,128,"Good","Pillar Drill",3,0,2/5/2023 00:00:00
+99,168,"Good","MiS Induction",3,0,19/2/2025 00:00:00
+100,168,"Good","Table Saw",19,0,17/6/2025 00:00:00
+101,168,"Good","Bench Grinder",87,0,9/5/2025 00:00:00
+102,168,"Good","Sliding Compound Saw",19,0,17/6/2025 00:00:00
+103,135,"Good","MiS Induction",3,0,10/10/2023 00:00:00
+104,135,"Good","Bandsaw",17,0,23/2/2024 00:00:00
+105,135,"Good","Woodturning Lathe",87,0,13/10/2024 00:00:00
+106,90,"Good","MiS Induction",3,0,4/10/2021 00:00:00
+107,90,"Good","Table Saw",19,1,28/9/2022 00:00:00
+108,90,"Good","Bandsaw",19,1,28/9/2022 00:00:00
+109,90,"Good","Sliding Compound Saw",19,1,28/9/2022 00:00:00
+110,90,"Good","DeWalt Ticknesser",19,1,28/9/2022 00:00:00
+111,90,"Good","CNC",95,1,1/7/2023 00:00:00
+112,125,"Good","MiS Induction",3,0,30/3/2023 00:00:00
+113,125,"Good","Table Saw",87,0,1/2/2024 00:00:00
+114,125,"Good","Jet Mortise",87,0,1/2/2024 00:00:00
+115,125,"Good","Bandsaw",87,0,1/2/2024 00:00:00
+116,125,"Good","Sliding Compound Saw",87,0,1/2/2024 00:00:00
+117,125,"Good","Planer / Thicknesser",87,0,1/2/2024 00:00:00
+118,125,"Good","Bench Grinder",87,0,1/2/2024 00:00:00
+119,125,"Good","Disc Sander",87,0,1/2/2024 00:00:00
+120,125,"Good","Pillar Drill",87,0,1/2/2024 00:00:00
+121,176,"Good","MiS Induction",3,0,6/6/2025 00:00:00
+122,176,"Good","Woodturning Lathe",87,0,9/6/2025 00:00:00
+123,176,"Good","Bench Grinder",87,0,9/6/2025 00:00:00
+124,89,"Good","MiS Induction",3,0,20/10/2021 00:00:00
+125,89,"Good","Bandsaw",19,0,4/8/2022 00:00:00
+126,89,"Good","Sliding Compound Saw",19,0,4/8/2022 00:00:00
+127,89,"Good","Jet Mortise",19,0,4/8/2022 00:00:00
+128,89,"Good","Computer",3,1,20/10/2021 00:00:00
+129,153,"Good","Pillar Drill",17,0,17/5/2024 00:00:00
+130,145,"Good","MiS Induction",3,0,31/1/2024 00:00:00
+131,145,"Good","Table Saw",58,0,31/1/2024 00:00:00
+132,13,"Good","MiS Induction",3,0,11/3/2014 00:00:00
+133,13,"Good","Table Saw",19,0,21/1/2020 00:00:00
+134,13,"Good","Bandsaw",19,0,21/1/2020 00:00:00
+135,13,"Good","Router Table",19,0,21/1/2020 00:00:00
+136,13,"Good","Bench Grinder",19,0,21/1/2020 00:00:00
+137,13,"Good","Woodturning Lathe",87,0,9/11/2021 00:00:00
+138,13,"Good","Pillar Drill",19,0,21/1/2020 00:00:00
+139,13,"Good","3D Printer",3,1,21/1/2024 00:00:00
+140,13,"Good","Computer",3,1,21/1/2024 00:00:00
+141,162,"Good","MiS Induction",3,0,7/10/2024 00:00:00
+142,162,"Good","Bandsaw",87,0,2/10/2025 00:00:00
+143,162,"Good","Sliding Compound Saw",87,0,2/10/2025 00:00:00
+144,162,"Good","Bench Grinder",87,0,26/10/2025 00:00:00
+145,162,"Good","Woodturning Lathe",87,0,26/10/2025 00:00:00
+146,162,"Good","Disc Sander",87,0,26/10/2025 00:00:00
+147,2,"Good","MiS Induction",3,0,20/2/2018 00:00:00
+148,2,"Good","Bandsaw",19,0,14/8/2018 00:00:00
+149,2,"Good","Sliding Compound Saw",19,0,14/8/2018 00:00:00
+150,2,"Good","Woodturning Lathe",87,0,26/3/2018 00:00:00
+151,184,"Good","MiS Induction",3,0,21/2/2025 00:00:00
+152,184,"Good","Jet Mortise",17,0,29/9/2025 00:00:00
+153,185,"Good","MiS Induction",3,0,21/2/2025 00:00:00
+154,185,"Good","Table Saw",17,0,24/4/2025 00:00:00
+155,185,"Good","Bandsaw",17,0,10/4/2025 00:00:00
+156,185,"Good","Sliding Compound Saw",17,0,8/5/2025 00:00:00
+157,185,"Good","DeWalt Ticknesser",17,0,8/1/2026 00:00:00
+158,185,"Good","Woodturning Lathe",87,0,21/7/2025 00:00:00
+159,185,"Good","Disc Sander",17,0,1/5/2025 00:00:00
+160,185,"Good","Pillar Drill",17,0,3/4/2025 00:00:00
+161,58,"Good","MiS Induction",3,1,11/6/2019 00:00:00
+162,58,"Good","Table Saw",8,1,31/1/2020 00:00:00
+163,58,"Good","Jet Mortise",8,1,31/1/2020 00:00:00
+164,58,"Good","Bandsaw",8,1,31/1/2020 00:00:00
+165,58,"Good","Sliding Compound Saw",8,1,31/1/2020 00:00:00
+166,58,"Good","DeWalt Ticknesser",8,1,7/2/2020 00:00:00
+167,58,"Good","Planer / Thicknesser",8,1,7/2/2020 00:00:00
+168,110,"Good","MiS Induction",3,1,27/10/2022 00:00:00
+169,110,"Good","Table Saw",19,1,7/11/2022 00:00:00
+170,110,"Good","Bandsaw",17,1,13/12/2022 00:00:00
+171,110,"Good","Sliding Compound Saw",19,1,22/2/2022 00:00:00
+172,110,"Good","Router Table",8,1,1/3/2023 00:00:00
+173,110,"Good","Planer / Thicknesser",17,1,6/4/2023 00:00:00
+174,110,"Good","DeWalt Ticknesser",17,1,6/4/2023 00:00:00
+175,110,"Good","CNC",95,1,1/7/2023 00:00:00
+176,151,"Good","MiS Induction",3,0,1/5/2025 00:00:00
+177,151,"Good","Table Saw",19,0,8/5/2025 00:00:00
+178,151,"Good","Bandsaw",19,0,8/5/2025 00:00:00
+179,151,"Good","Sliding Compound Saw",19,0,8/5/2025 00:00:00
+180,151,"Good","DeWalt Ticknesser",17,0,17/5/2025 00:00:00
+181,151,"Good","Planer / Thicknesser",17,0,19/5/2025 00:00:00
+182,151,"Good","Pillar Drill",19,0,8/5/2025 00:00:00
+183,183,"Good","MiS Induction",3,0,17/9/2025 00:00:00
+184,183,"Good","Table Saw",110,0,17/9/2025 00:00:00
+185,183,"Good","Bandsaw",110,0,17/9/2025 00:00:00
+186,183,"Good","Sliding Compound Saw",110,0,16/12/2025 00:00:00
+187,183,"Good","Pillar Drill",110,0,17/9/2025 00:00:00
+188,183,"Good","CNC",95,0,17/9/2025 00:00:00
+189,189,"Good","MiS Induction",3,0,12/12/2025 00:00:00
+190,189,"Good","Table Saw",17,0,7/1/2026 00:00:00
+191,87,"Good","MiS Induction",3,1,17/10/2021 00:00:00
+192,87,"Good","Table Saw",17,1,6/4/2023 00:00:00
+193,87,"Good","Sliding Compound Saw",17,1,6/4/2023 00:00:00
+194,87,"Good","Scroll Saw",3,1,20/10/2021 00:00:00
+195,87,"Good","Bench Grinder",17,1,6/4/2023 00:00:00
+196,87,"Good","Woodturning Lathe",19,1,19/5/2022 00:00:00
+197,87,"Good","Planer / Thicknesser",17,1,6/4/2023 00:00:00
+198,87,"Good","Pillar Drill",17,1,6/4/2023 00:00:00
+199,22,"Good","MiS Induction",3,1,4/2/2014 00:00:00
+200,22,"Good","Circular Saw",19,0,16/7/2015 00:00:00
+201,22,"Good","DeWalt Ticknesser",19,0,16/7/2015 00:00:00
+202,22,"Good","Sliding Compound Saw",19,0,16/7/2015 00:00:00
+203,22,"Good","Plunge Router",0,0,11/7/2017 00:00:00
+204,22,"Good","Router Table",0,0,11/7/2017 00:00:00
+205,149,"Good","MiS Induction",3,0,4/4/2024 00:00:00
+206,149,"Good","Table Saw",19,0,8/4/2024 00:00:00
+207,149,"Good","Jet Mortise",19,0,15/4/2024 00:00:00
+208,149,"Good","Bandsaw",19,0,15/4/2024 00:00:00
+209,149,"Good","Sliding Compound Saw",3,0,8/4/2024 00:00:00
+210,149,"Good","Pillar Drill",3,0,8/4/2024 00:00:00
+211,23,"Good","MiS Induction",3,0,29/10/2015 00:00:00
+212,23,"Good","Table Saw",19,0,15/12/2015 00:00:00
+213,23,"Good","Bandsaw",19,0,12/4/2016 00:00:00
+214,23,"Good","Woodturning Lathe",87,0,22/5/2024 00:00:00
+215,35,"Good","MiS Induction",3,0,23/8/2018 00:00:00
+216,35,"Good","Bandsaw",17,0,8/11/2018 00:00:00
+217,35,"Good","Woodturning Lathe",87,0,21/2/2019 00:00:00
+218,25,"Good","MiS Induction",3,1,27/7/2017 00:00:00
+219,25,"Good","Table Saw",17,0,22/8/2017 00:00:00
+220,25,"Good","Bandsaw",19,0,12/7/2022 00:00:00
+221,25,"Good","Sliding Compound Saw",17,0,8/8/2017 00:00:00
+222,25,"Good","Router Table",19,0,5/4/2022 00:00:00
+223,25,"Good","Pillar Drill",17,0,1/8/2017 00:00:00
+224,25,"Good","Jet Mortise",19,0,12/7/2022 00:00:00
+225,112,"Good","MiS Induction",3,0,4/1/2023 00:00:00
+226,112,"Good","Table Saw",58,0,31/1/2024 00:00:00
+227,112,"Good","Bandsaw",3,0,31/1/2024 00:00:00
+228,112,"Good","Sliding Compound Saw",19,0,12/4/2024 00:00:00
+229,112,"Good","Pillar Drill",19,0,12/4/2024 00:00:00
+230,142,"Good","MiS Induction",3,0,29/11/2023 00:00:00
+231,142,"Good","Pillar Drill",17,0,17/3/2025 00:00:00
+232,142,"Good","Bench Grinder",87,0,14/3/2025 00:00:00
+233,111,"Good","MiS Induction",3,0,10/11/2022 00:00:00
+234,111,"Good","Sliding Compound Saw",19,0,16/11/2022 00:00:00
+235,175,"Good","MiS Induction",3,0,27/3/2025 00:00:00
+236,175,"Good","Planer / Thicknesser",17,0,9/5/2025 00:00:00
+237,175,"Good","Disc Sander",17,0,10/4/2025 00:00:00
+238,175,"Good","Bench Grinder",17,0,4/4/2025 00:00:00
+239,175,"Good","Pillar Drill",17,0,4/4/2025 00:00:00
+240,146,"Good","MiS Induction",3,0,1/2/2024 00:00:00
+241,146,"Good","Bandsaw",17,0,4/12/2025 00:00:00
+242,146,"Good","Sliding Compound Saw",17,0,23/4/2025 00:00:00
+243,146,"Good","Disc Sander",17,0,23/4/2025 00:00:00
+244,146,"Good","Pillar Drill",17,0,22/4/2025 00:00:00
+245,178,"Good","MiS Induction",0,0,6/4/2024 00:00:00
+246,178,"Good","Planer / Thicknesser",0,0,6/4/2024 00:00:00
+247,152,"Good","MiS Induction",3,0,8/5/2024 00:00:00
+248,152,"Good","Table Saw",19,0,8/5/2024 00:00:00
+249,152,"Good","Bandsaw",19,0,8/5/2024 00:00:00
+250,152,"Good","Sliding Compound Saw",19,0,8/5/2024 00:00:00
+251,152,"Good","Scroll Saw",87,0,22/5/2024 00:00:00
+252,152,"Good","DeWalt Ticknesser",19,0,8/5/2024 00:00:00
+253,152,"Good","Woodturning Lathe",87,0,8/5/2024 00:00:00
+254,152,"Good","Pillar Drill",19,0,8/5/2024 00:00:00
+255,158,"Good","MiS Induction",3,0,8/8/2024 00:00:00
+256,158,"Good","Bandsaw",17,0,11/11/2024 00:00:00
+257,158,"Good","Sliding Compound Saw",17,0,11/11/2024 00:00:00
+258,121,"Good","MiS Induction",3,0,24/2/2023 00:00:00
+259,121,"Good","Table Saw",17,0,6/4/2023 00:00:00
+260,121,"Good","Planer / Thicknesser",17,0,6/4/2023 00:00:00
+261,121,"Good","Pillar Drill",17,0,6/4/2023 00:00:00
+262,131,"Good","MiS Induction",3,0,2/8/2023 00:00:00
+263,131,"Good","Pillar Drill",19,0,2/8/2023 00:00:00
+264,133,"Good","MiS Induction",3,0,11/9/2023 00:00:00
+265,133,"Good","Woodturning Lathe",87,0,3/5/2025 00:00:00
+266,31,"Support","MiS Induction",3,0,6/1/2015 00:00:00
+268,60,"Good","MiS Induction",3,0,8/8/2019 00:00:00
+269,60,"Good","Bandsaw",17,0,14/1/2020 00:00:00
+270,60,"Good","Sliding Compound Saw",17,0,14/1/2020 00:00:00
+271,60,"Good","Pillar Drill",17,0,14/1/2020 00:00:00
+272,169,"Good","MiS Induction",3,0,4/4/2025 00:00:00
+273,169,"Good","Table Saw",17,0,9/4/2025 00:00:00
+274,169,"Good","Jet Mortise",17,0,9/4/2025 00:00:00
+275,169,"Good","Bandsaw",17,0,9/4/2025 00:00:00
+276,169,"Good","Sliding Compound Saw",17,0,2/6/2025 00:00:00
+277,169,"Good","Woodturning Lathe",87,0,2/6/2025 00:00:00
+278,169,"Good","Disc Sander",17,0,9/4/2025 00:00:00
+279,169,"Good","Pillar Drill",17,0,9/4/2025 00:00:00
+280,141,"Good","MiS Induction",3,0,16/11/2023 00:00:00
+281,141,"Good","Woodturning Lathe",87,0,18/12/2023 00:00:00
+282,32,"Good","MiS Induction",3,0,11/3/2014 00:00:00
+283,32,"Good","Table Saw",17,0,23/9/2015 00:00:00
+284,32,"Good","Bandsaw",17,0,23/9/2015 00:00:00
+285,32,"Good","Sliding Compound Saw",17,0,23/9/2015 00:00:00
+286,32,"Good","Scroll Saw",17,0,23/9/2015 00:00:00
+287,32,"Good","Plunge Router",17,0,15/10/2018 00:00:00
+288,32,"Good","DeWalt Ticknesser",17,0,23/9/2015 00:00:00
+289,32,"Good","Planer / Thicknesser",17,0,23/9/2015 00:00:00
+290,32,"Good","Bench Grinder",17,0,15/10/2018 00:00:00
+291,32,"Good","Woodturning Lathe",17,0,15/10/2018 00:00:00
+292,32,"Good","Disc Sander",17,0,23/9/2015 00:00:00
+293,32,"Good","Circular Saw",17,0,23/9/2015 00:00:00
+294,32,"Good","Jigsaw",17,0,23/9/2018 00:00:00
+295,175,"Good","3D Printer",3,1,15/1/2026 00:00:00
+296,75,"Good","MiS Induction",3,1,28/1/2020 00:00:00
+297,75,"Good","Table Saw",19,0,21/9/2022 00:00:00
+298,75,"Good","Jet Mortise",19,0,15/4/2022 00:00:00
+299,75,"Good","Bandsaw",19,0,3/3/2020 00:00:00
+300,75,"Good","Sliding Compound Saw",19,0,20/2/2020 00:00:00
+301,75,"Good","Scroll Saw",17,0,13/5/2025 00:00:00
+302,75,"Good","Router Table",19,0,5/4/2022 00:00:00
+303,75,"Good","Planer / Thicknesser",17,0,13/5/2025 00:00:00
+304,75,"Good","DeWalt Ticknesser",8,0,2/6/2021 00:00:00
+305,75,"Good","Bench Grinder",17,0,13/5/2025 00:00:00
+306,75,"Good","Woodturning Lathe",87,0,2/6/2020 00:00:00
+307,75,"Good","Disc Sander",19,0,5/4/2022 00:00:00
+308,75,"Good","Circular Saw",17,0,13/5/2025 00:00:00
+309,75,"Good","Jigsaw",17,0,13/5/2025 00:00:00
+310,75,"Good","Pillar Drill",19,0,6/4/2022 00:00:00
+311,75,"Good","Jet Mortise",19,0,17/12/2022 00:00:00
+312,110,"Good","3D Printer",3,1,15/1/2026 00:00:00
+313,145,"Good","Computer",3,0,15/1/2026 00:00:00
+314,3,"Good","Sorby Grinder",19,1,15/3/2026 00:00:00
+315,3,"Good","Nail Gun",19,1,15/3/2026 00:00:00
+318,19,"Good","Biscuit Jointer",3,0,15/4/2026 00:00:00
+319,19,"Good","Circular Saw",3,0,15/4/2026 00:00:00
+320,19,"Good","Computer",3,0,15/4/2026 00:00:00
+321,19,"Good","Disc Sander",3,1,15/4/2026 00:00:00
+322,19,"Good","Jet Mortise",3,1,15/4/2026 00:00:00
+323,19,"Good","Jigsaw",3,0,15/4/2026 00:00:00
+324,19,"Good","Pillar Drill",3,1,15/4/2026 00:00:00
+325,19,"Good","Plunge Router",3,0,15/4/2026 00:00:00
+326,19,"Good","Router Table",3,1,15/4/2026 00:00:00
+327,19,"Good","Scroll Saw",3,1,15/4/2026 00:00:00
+328,19,"Good","Sliding Compound Saw",3,1,15/4/2026 00:00:00
+329,19,"Good","Table Saw",3,1,15/4/2026 00:00:00
+330,19,"Good","Woodturning Lathe",3,1,15/4/2026 00:00:00
+331,19,"Good","Bandsaw",3,1,15/4/2026 00:00:00
+332,19,"Good","Bench Grinder",3,1,15/4/2026 00:00:00
