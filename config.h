@@ -28,7 +28,7 @@ struct trained {
 struct shedder {
 	int memID;
 	std::string givenName;
-}
+};
 
 /*def init():
     global sender
