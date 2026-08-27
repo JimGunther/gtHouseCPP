@@ -8,13 +8,9 @@
 #include "theDB.h"
 /**************************************************************************************************
 * qutie.h: header file for Qutie class
-* Version of 18/08/2026 17:02
+* Version of 19/08/2026 09:35
 * Written by Jim Gunther
 ***************************************************************************************************/
-
-//const std::string svr_uri = "mqtt://localhost:1883";
-//const std::string client_id = "JimPi5";
-//const std::string pers = "./persist";
 
 class Qutie {
 	public:
@@ -24,6 +20,7 @@ class Qutie {
 		void postStuff(std::string topic, std::string payload);
 		void messageSentry(std::string rfid, std::string msg);
 		void messageAllSentries(std::string msg);
+		void rebootSentry(std::string rfid);
 	private:
 		theDB* _dbPtr;
 		mqtt::async_client* _cliPtr;

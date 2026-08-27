@@ -7,8 +7,8 @@
 
 /*********************************************************************************************************************************
 * qutie.cpp: support CPP file for Sentinel project. Handles MQTT functionality, using the paho.mqtt.client library
-* Version 0.3
-* Last updated 18/08/2026 15:2601
+* Version 0.4
+* Last updated 27/08/2026 11:15
 * Author: Jim Gunther
 *********************************************************************************************************************************/
 //#using namespace std::chrono_literals;
@@ -69,18 +69,13 @@ void Qutie::init(theDB* dBase, mqtt::async_client* pCli) {
 	mqtt::token_ptr tok = _cliPtr->connect(_connOpts);
 	tok->wait();
 	std::string top;
-	//std::cout << "after connect" << std::endl;
-	//std::cout << tok << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
-	//std::cout << "after response" << std::endl;
 	std::cout << "Subscribing to topics..." << std::endl;
 	for (sentry rfid : _rfids) {
 		top = "MiS/" + rfid.name + "/IN";
 		_cliPtr->subscribe(top, 0);
-		//std::cout << "  " << top << std::endl;
 		top = "MiS/MACH/" + rfid.name + "/IN";
 		_cliPtr->subscribe(top, 0);
-		//std::cout << "  " << top << std::endl;
 	}
     std::cout << "MQTT started" << std::endl;
 }
@@ -92,22 +87,23 @@ void Qutie::postStuff(std::string topic, std::string payload) {
     _cliPtr->publish(pubMsg);
     std::cout << topic << "::" << payload << std::endl;
 }
-// =>CPP HERE!
     
 void Qutie::messageSentry(std::string rfid, std::string msg) { //currently not in use: use and format to be agreed
-        std:string tpc = rfid + "/MSG";
-        postStuff(tpc, msg):
+        std::string tpc = rfid + "/MSG";
+        postStuff(tpc, msg);
 }
 
 void Qutie::messageAllSentries(std::string msg) {
     std::string tpc = "MSG";
     postStuff(tpc, msg);
 }
-/*
-    def rebootSentry(self, rfid : str) -> None:
-        tpc = rfid + "/RST"
-        self.postStuff(tpc, "-")
 
+void Qutie::rebootSentry(std::string rfid) {
+    std::string tpc = rfid + "/RST";
+    postStuff(tpc, "-");
+}
+// =>CPP HERE IF NEEDED!
+/*
     def switchLCD(self, msg :str) -> None:
         tpc = "LCD"
         self.postStuff(tpc, msg)

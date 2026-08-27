@@ -2,16 +2,16 @@
 #define THEDB_H
 
 #include <string>
-#include <mysql/mysql.h>
-//#include <map>
 #include <vector>
 #include "config.h"
+#include <mysql/mysql.h>
+
 
 /***********************************************************************************************
 * theDB.h: header file for theDB class                                                         *
 *                                                                                              *
-* Version: 0.2                                                                                 *
-* Last updated: 18/08/2026 19:27                                                               *
+* Version: 0.4                                                                                 *
+* Last updated: 27/08/2026 10:35                                                               *
 * Author: Jim Gunther                                                                          *
 *                                                                                              *
 ***********************************************************************************************/
@@ -23,12 +23,21 @@ public:
 	bool begin();
 	std::vector<sentry> listTerminals();
 	bool logTouch(std::string fobUID);
+	std::string fobFromNo(int memNo);
 	bool logMessage(std::string text);
+	std::vector<visitor> listTodaysAll();
+	std::vector<std::string> listTodaysForcees();
+	std::vector<dayFobber> dayFobbers();
+	bool addFob(std::string uid);
+	std::vector<mthVisit> monthlyVisits();
 	shedder matchShedder(std::string fobUIDString);
+	bool mtExists(int memID, int mchNo);
 	bool isInShed(int memID);
 	bool addVisit(int memID);
 	bool addExit(int memID);
+	bool resetCommand();
 	bool isAPerm(std::string fobUID);
+	std::vector<mthVisitor> monthVisitors();
 
 private:
 	bool openConnection();
@@ -42,8 +51,6 @@ private:
 	MYSQL* _myConn;
 	MYSQL_RES* _result;
 	MYSQL_ROW _row;
-//	std::vector<MYSQL_ROW> _rows;
-//	std::vector<unsigned long*> _lengths;
 // ADD HERE...
 };
 
