@@ -36,7 +36,7 @@ bool theDB::openConnection() {
 
 bool theDB::preFetch(std::string sql, bool store) {
 	int status = mysql_real_query(_myConn, sql.c_str(), sql.length());
-    if (status !=0) {
+    if (status > 2) {
 		std::string sErr(mysql_error(_myConn));
         _errMsg = sErr;
 		mysql_close(_myConn);
@@ -56,6 +56,8 @@ bool theDB::changeData(std::string sql) {
 		mysql_close(_myConn);
 		return false;
 	}
+	int nRows = mysql_affected_rows(_myConn);
+	std::cout << "No. of rows affected: " << nRows << std::endl;
 	mysql_close(_myConn);
     return true;
 }
@@ -87,6 +89,8 @@ shedder theDB::matchShedder(std::string fobUIDString) {
 	MYSQL_ROW row = mysql_fetch_row(_result);
     s.memID = atoi(row[0]);
 	s.givenName = std::string(row[1]);
+	std::cout << s.memID << s.givenName << std::endl;
+	mysql_free_result(_result);
 	mysql_close(_myConn);
 	
 	return s;
@@ -120,6 +124,7 @@ bool theDB::mtExists(int memID, int mchNo) {
 	if (openConnection() && preFetch(sql, true)) {
 		MYSQL_ROW row = mysql_fetch_row(_result);
 		n = atoi(row[0]);
+		mysql_free_result(_result);
 		mysql_close(_myConn);
 		return n > 0;
 	}
@@ -135,9 +140,10 @@ bool theDB::isInShed(int memID) {
     std::string sql = "SELECT ShedderID FROM Visits WHERE EndTime IS NULL AND ShedderID = " + std::to_string(memID);
 	if (!openConnection()) return false;
 	if (!preFetch(sql, true)) return false;
-	int nFields = mysql_num_fields(_result);
+	MYSQL_ROW row = mysql_fetch_row(_result);
+	mysql_free_result(_result);
 	mysql_close(_myConn);
-    return nFields > 0;
+	return row != NULL;
 }
    
 // 3. Add entry to Visits table
@@ -146,6 +152,7 @@ bool theDB::addVisit(int memID) {
     //parameter: shedder ID : int
     //returns: bool: true if successfully added, else false
     std::string sql = "INSERT INTO Visits (StartTime, ShedderID) VALUES (NOW(), " + std::to_string(memID) + ")";
+	std::cout << sql << std::endl;
     return changeData(sql);
 }
 
@@ -156,6 +163,7 @@ bool theDB::addExit(int memID) {
     //shedderID: int; shedder's unique ID (NOT fob UID)
     //returns: bool: True if successfully updated, False otherwise
     std::string sql = "UPDATE Visits SET EndTime = NOW() WHERE ShedderID = " + std::to_string(memID) + " AND EndTime IS NULL";
+	std::cout << sql << std::endl;
     return changeData(sql);
 }
 
@@ -232,6 +240,7 @@ bool theDB::addFob(std::string uid) {
 	if (!openConnection()) return false;
 	if (!preFetch(sql, true)) return false;
 	nFields = mysql_num_fields(_result);
+	mysql_free_result(_result);
     if (nFields == 0) {
         sql = "INSERT INTO NewFobs (FobUID) VALUES('" + uid + "')";
         return changeData(sql);
@@ -285,10 +294,8 @@ std::vector<sentry> theDB::listTerminals() {
 	mysql_free_result(_result);
     mysql_close(_myConn);
     		
-	//std::cout << "End ListTerminals()" << rfids.size() << std::endl;
     return rfids;
 }
-
 
 // #11. procedure to reset the Commd field in Terminals table
 bool theDB::resetCommand() {

@@ -18,52 +18,231 @@
 * GtHouse.cpp main CPP file for Sentinel project. Acts as intermediary between Sentry RFID terminals (using Wifi/MQTT) and the
 * Sentinel database, running on the same RPi on the MariaDB database server: now with added support for machines!
 * Version 0.8
-* Last updated 27/08/2026 11:02
+* Last updated 01/09/2026 19:44
 * Author: Jim Gunther
 *********************************************************************************************************************************/
 // Global variables (?)
-const std::string svr_uri = "mqtt://localhost:1883";
-const std::string client_id = "SentinelPi";
+const std::string SVR_URI = "mqtt://localhost:1883";
+const std::string CLIENT_ID = "SentinelPi";
+const std::string TOPIC1("RFID/+/GATE");
+const std::string TOPIC2("RFID/+/MACH");
+const int QOS = 0;
+const int N_RETRY_ATTEMPTS = 5;
 	
 theDB db;
-Qutie qt;
-mqtt::async_client cli(svr_uri, client_id);
 
 std::time_t ttNow = std::time(0);
 struct tm* dt = gmtime(&ttNow);
 int prevHour = dt->tm_hour;
 std::time_t ttFire = ttNow + 99 * 24 * 3600; // time until fire timeout as epoch (time_t)
 int prevDay = 0;
-extern bool touchReceived;
-extern bool machTouched;
-extern std::string sender, icMessText;
+bool touchReceived, machTouched;
+int sender;
+std::string icMessText;
 std::chrono::time_point<std::filesystem::__file_clock> ttTrained = std::filesystem::__file_clock::now();
 std::vector<std::string> prevCommands;
 //std::vector<std::string> prevMessages;
 std::map<std::string, int> machLookup;
 std::vector<trained> machTrained;
 
-// HELPER FUNCTIONS FOR STARTUP======================================================================================================
+// HELPER CLASSES FOR MQTT=======================================================================================================
+/////////////////////////////////////////////////////////////////////////////
+
+// Callbacks for the success or failures of requested actions.
+// This could be used to initiate further action, but here we just log the
+// results to the console.
+
+class action_listener : public virtual mqtt::iaction_listener
+{
+    std::string name_;
+
+    void on_failure(const mqtt::token& tok) override
+    {
+        std::cout << name_ << " failure";
+        if (tok.get_message_id() != 0)
+            std::cout << " for token: [" << tok.get_message_id() << "]" << std::endl;
+        std::cout << std::endl;
+    }
+
+    void on_success(const mqtt::token& tok) override
+    {
+        std::cout << name_ << " success";
+        if (tok.get_message_id() != 0)
+            std::cout << " for token: [" << tok.get_message_id() << "]" << std::endl;
+        auto top = tok.get_topics();
+        if (top && !top->empty())
+            std::cout << "\ttoken topic: '" << (*top)[0] << "', ..." << std::endl;
+        std::cout << std::endl;
+    }
+
+public:
+    action_listener(const std::string& name) : name_(name) {}
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Local callback & listener class for use with the client connection.
+ * This is primarily intended to receive messages, but it will also monitor
+ * the connection to the broker. If the connection is lost, it will attempt
+ * to restore the connection and re-subscribe to the topic.
+ */
+class callback : public virtual mqtt::callback, public virtual mqtt::iaction_listener
+
+{
+    // Counter for the number of connection retries
+    int nretry_;
+    // The MQTT client
+    mqtt::async_client& cli_;
+    // Options to use if we need to reconnect
+    mqtt::connect_options& connOpts_;
+    // An action listener to display the result of actions.
+    action_listener subListener_;
+
+    // This deomonstrates manually reconnecting to the broker by calling
+    // connect() again. This is a possibility for an application that keeps
+    // a copy of it's original connect_options, or if the app wants to
+    // reconnect with different options.
+    // Another way this can be done manually, if using the same options, is
+    // to just call the async_client::reconnect() method.
+    void reconnect()
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+        try {
+            cli_.connect(connOpts_, nullptr, *this);
+        }
+        catch (const mqtt::exception& exc) {
+            std::cerr << "Error: " << exc.what() << std::endl;
+            exit(1);
+        }
+    }
+
+    // Re-connection failure
+    void on_failure(const mqtt::token& tok) override
+    {
+        std::cout << "Connection attempt failed" << std::endl;
+        if (++nretry_ > N_RETRY_ATTEMPTS)
+            exit(1);
+        reconnect();
+    }
+
+    // (Re)connection success
+    // Either this or connected() can be used for callbacks.
+    void on_success(const mqtt::token& tok) override {}
+
+    // (Re)connection success
+    void connected(const std::string& cause) override
+    {
+        std::cout << "\nConnection success" << std::endl;
+        std::cout << "\nSubscribing to topic '" << TOPIC1 << " and " << TOPIC2 << "'\n"
+                  << "\tfor client " << CLIENT_ID << " using QoS" << QOS << "\n"
+                  << "\nPress Q<Enter> to quit\n"
+                  << std::endl;
+
+        cli_.subscribe(TOPIC1, QOS, nullptr, subListener_);
+		cli_.subscribe(TOPIC2, QOS, nullptr, subListener_);
+    }
+
+    // Callback for when the connection is lost.
+    // This will initiate the attempt to manually reconnect.
+    void connection_lost(const std::string& cause) override
+    {
+        std::cout << "\nConnection lost" << std::endl;
+        if (!cause.empty())
+            std::cout << "\tcause: " << cause << std::endl;
+
+        std::cout << "Reconnecting..." << std::endl;
+        nretry_ = 0;
+        reconnect();
+    }
+
+    // Callback for when a message arrives.
+    void message_arrived(mqtt::const_message_ptr msg) override
+    {
+        std::cout << "\nMessage arrived" << std::endl;
+        std::cout << "\ttopic: '" << msg->get_topic() << "'" << std::endl;
+        std::cout << "\tpayload: '" << msg->to_string() << std::endl;
+		std::string topicType = msg->get_topic().substr(7);
+		if (topicType == "MACH") machTouched = true;
+		else touchReceived = true;
+		sender = stoi(msg->get_topic().substr(5, 1));
+		icMessText = msg->to_string();
+		
+    }
+
+    void delivery_complete(mqtt::delivery_token_ptr token) override {}
+
+public:
+    callback(mqtt::async_client& cli, mqtt::connect_options& connOpts)
+        : nretry_(0), cli_(cli), connOpts_(connOpts), subListener_("Subscription")
+    {
+    }
+};
+
+// HELPER FUNCTIONS FOR STARTUP==================================================================================================
 
 void setupCmds() {
-    std::vector<sentry> rfids = qt.getRFIDs();
-    for (sentry row : rfids) {
-        prevCommands.push_back("ZZZ"); // start with a dummy value
-		//prevMessages.push_back(row.LCDText);
-	}
+    //int n = qt.getNumRFIDs();
+    //for (int i = 0; i < n; i++) {
+      //  prevCommands.push_back("ZZZ"); // start with a dummy value
+	//}
 }
 
 // HELPER FUNCTIONS FOR loopGH===================================================================================================
 
-void handleIncomingTouch() {
+
+void onTimeout() {
+    std::time_t ttNow = std::time(0);
+	ttFire = ttNow + 99 * 24 *3600;
+    //qt.messageAllSentries("MiS Tag Identity");
+    db.logMessage("MiS Tag Identity");
+}
+
+void postStuff(mqtt::async_client& cli, std::string topic, std::string payload) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(800));
+	auto pubMsg = mqtt::make_message("GH/" + topic, payload);
+	pubMsg->set_qos(0);
+    cli.publish(pubMsg);
+    std::cout << topic << "::" << payload << std::endl;
+}
+
+void messageSentry(mqtt::async_client& cli, int rfidNo, std::string msg) { //currently not in use: use and format to be agreed
+    std::string tpc = std::to_string(rfidNo) + "/MSG";
+    postStuff(cli, tpc, msg);
+}
+
+void messageAllSentries(mqtt::async_client& cli, std::string msg) {
+    std::string tpc = "MSG";
+    postStuff(cli, tpc, msg);
+}
+
+void rebootSentry(mqtt::async_client& cli, int rfidNo) {
+    std::string tpc = std::to_string(rfidNo) + "/RST";
+    postStuff(cli, tpc, "-");
+}
+
+// =>CPP HERE IF NEEDED!
+/*
+    def switchLCD(self, msg :str) -> None:
+        tpc = "LCD"
+        self.postStuff(cli, tpc, msg)
+
+    def setIntvl(self, msg : str) -> None:
+        tpc = "DELAY"
+        self.postStuff(cli, tpc, msg)
+*/
+
+void handleIncomingTouch(mqtt::async_client& cli) {
     //handleIncomingTouch(): method called every time a fob touches the RFID screen - via MQTT from a Sentry
-    //parameters: none
+    //parameters: async_client: cli: reference to MQTT client object
     //returns void, but publishes a reply on MQTT 
     
     if (!touchReceived && !machTouched) return;
     
+	std::cout << "Message!" << std::endl;
     std::string fobuid = icMessText.substr(0, 8);// ASSUMES UID IS 8 CHARACTERS LONG
 	std::string reply;
+	std::cout << "i/c msg: " << icMessText << std::endl;
 
     if (machTouched) {
 		machTouched = false;
@@ -73,8 +252,8 @@ void handleIncomingTouch() {
 		std::string yn;
         if (matched) yn = ",Y";
         else yn = ",N";
-        reply = fobuid + yn;
-        qt.postStuff(sender + "OUT", reply); // for machine authorisation "sender" is actually i/c topic minus "IN" at the end
+        reply = fobuid + "," + icMessText.substr(9) + yn;
+        postStuff(cli, std::to_string(sender) + "/MACH", reply); 
         return;
 	}
     
@@ -87,23 +266,23 @@ void handleIncomingTouch() {
     if (fobuid == EMF) { // Emergency Fire Fob
         // Line below is my best guess at syntax: CHECK WITH RICHARD!
         system("/home/MIS/Sentinel/bin/InNow.sh");
-        qt.messageAllSentries("Fire alarm from " + sender);
-        db.logMessage("Fire alarm from " + sender);
+        messageAllSentries(cli, "Fire alarm from RFID_" + std::to_string(sender));
+        db.logMessage("Fire alarm from RFID_" + std::to_string(sender));
 		std::time_t ttNow = std::time(NULL);
 		ttFire = ttNow + 3 * 3600; // time until fire timeout (3 hours)
         return;
 	}
     
-    // "Normal" fob in/out fgrom here...
+    // "Normal" fob in/out from here...
 	shedder mem = db.matchShedder(fobuid);
     if (mem.memID > 0) {  // matching fob in database: must be visit (in or out)
         if (db.isInShed(mem.memID)) {   // must be exit
             db.addExit(mem.memID);
-            std::string reply = fobuid + ":B:" + mem.givenName;
+            reply = fobuid + ":B:" + mem.givenName;
 		}
         else {
             db.addVisit(mem.memID);
-            std::string reply = fobuid + ":W:" + mem.givenName;
+            reply = fobuid + ":W:" + mem.givenName;
 		}
 	}
     else { // no match: add to Fob Store unless already in use
@@ -115,15 +294,9 @@ void handleIncomingTouch() {
 		else db.logMessage(fobuid + " is already in use");
 	}
 
-    qt.postStuff(sender + "/OUT", reply); // always reply to RFID (even if adding to fob store)
+    postStuff(cli, std::to_string(sender) + "/GATE", reply); // always reply to RFID (even if adding to fob store)
 }
 
-void onTimeout() {
-    std::time_t ttNow = std::time(0);
-	ttFire = ttNow + 99 * 24 *3600;
-    qt.messageAllSentries("MiS Tag Identity");
-    db.logMessage("MiS Tag Identity");
-}
 /*
 void forcees() { // runs dailyReport()
     //forcees(): now just runs daily report and checks for Traioned.txt changed
@@ -357,7 +530,7 @@ void checkForCommands() {
             //print(cmd)
             prevCommands[i] = cmd;
             std::string target = row.name;
-            if (cmd == "RST") qt.rebootSentry(target);
+            //if (cmd == "RST") qt.rebootSentry(target);
             //if (cmd == "LCD") qt.switchLCD(cmd);
             //if ((cmd.substr(0:3) == "RED") || (cmd.substr(0:3) == "GRN")) qt.setIntvl(cmd);
         }
@@ -372,7 +545,7 @@ void checkForMessages() {
     // returns: none
     vector<sentry> results = db.listTerminals();
     int i = 0;
-    for (sentry: row : results) {
+    for (sentry row : results) {
         std::string mess = row[1];
         if (mess != prevMessages[i]) {
             prevMessages[i] = mess;
@@ -396,27 +569,56 @@ bool setup() {
 		std::cout << "Error opening database library." << std::endl;
 		return false;
 	}
-	qt.init(&db, &cli);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     setupCmds();
     std::cout << "**Setup done**" << std::endl;
 	return true;
 }
 
-void loopGH() {
+void loopGH(mqtt::async_client& cli) {
+	//while (std::tolower(std::cin.get()) != 'q');
     while (true) {
-        handleIncomingTouch();
+		/*std::cout << "TouchRecd: " << touchReceived << std::endl;
+		std::cout << "MachRecd: " << machTouched << std::endl;
+		touchReceived = machTouched = false;
+		std::cout << "Sender: " << sender << std::endl;
+		std::cout << icMessText << std::endl;*/
+        handleIncomingTouch(cli);
         //forcees(); // runs at set time: currently 18:00: NOT NEEDED? All done by Richard's code controlled by cron??
-        checkMonthly();
-        checkForCommands();
+        //checkMonthly();
+        //checkForCommands();
+        //checkForCommands();
         //checkForMessages();
         if (std::time(0) > ttFire) onTimeout();
-        std::this_thread::sleep_for(std::chrono::milliseconds(800));
-		std::cout << "loop" << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(600));
+		//std::cout << "loop" << std::endl;
 	}	
 }
 
 int main() {
-	if (setup()) loopGH();
+	mqtt::async_client cli(SVR_URI, CLIENT_ID);
+
+	mqtt::connect_options connOpts;
+    connOpts.set_clean_session(false);
+
+    // Install the callback(s) before connecting.
+    callback cb(cli, connOpts);
+    cli.set_callback(cb);
+
+    // Start the connection.
+    // When completed, the callback will subscribe to topic.
+
+    try {
+        std::cout << "Connecting to the MQTT server '" << SVR_URI << "'..." << std::flush;
+        cli.connect(connOpts, nullptr, cb);
+    }
+    catch (const mqtt::exception& exc) {
+        std::cerr << "\nERROR: Unable to connect to MQTT server: '" << SVR_URI << "'" << exc
+                  << std::endl;
+        return 1;
+    }
+
+	if (setup()) loopGH(cli);
 	return 0;
 }
 

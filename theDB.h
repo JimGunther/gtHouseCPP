@@ -10,8 +10,8 @@
 /***********************************************************************************************
 * theDB.h: header file for theDB class                                                         *
 *                                                                                              *
-* Version: 0.4                                                                                 *
-* Last updated: 27/08/2026 10:35                                                               *
+* Version: 0.5                                                                                 *
+* Last updated: 28/08/2026 14:42                                                               *
 * Author: Jim Gunther                                                                          *
 *                                                                                              *
 ***********************************************************************************************/
@@ -22,6 +22,7 @@ public:
 	theDB();
 	bool begin();
 	std::vector<sentry> listTerminals();
+	int topRFID();
 	bool logTouch(std::string fobUID);
 	std::string fobFromNo(int memNo);
 	bool logMessage(std::string text);
