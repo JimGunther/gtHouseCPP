@@ -10,8 +10,8 @@
 /***********************************************************************************************
 * theDB.h: header file for theDB class                                                         *
 *                                                                                              *
-* Version: 0.5                                                                                 *
-* Last updated: 28/08/2026 14:42                                                               *
+* Version: 0.6                                                                                 *
+* Last updated: 07/09/2026 10:27                                                               *
 * Author: Jim Gunther                                                                          *
 *                                                                                              *
 ***********************************************************************************************/
@@ -26,9 +26,6 @@ public:
 	bool logTouch(std::string fobUID);
 	std::string fobFromNo(int memNo);
 	bool logMessage(std::string text);
-	std::vector<visitor> listTodaysAll();
-	std::vector<std::string> listTodaysForcees();
-	std::vector<dayFobber> dayFobbers();
 	bool addFob(std::string uid);
 	std::vector<mthVisit> monthlyVisits();
 	shedder matchShedder(std::string fobUIDString);
@@ -36,6 +33,7 @@ public:
 	bool isInShed(int memID);
 	bool addVisit(int memID);
 	bool addExit(int memID);
+	bool addMach(int memID, int mchNo, bool refused);
 	bool resetCommand();
 	bool isAPerm(std::string fobUID);
 	std::vector<mthVisitor> monthVisitors();
@@ -43,7 +41,7 @@ public:
 private:
 	bool openConnection();
 	bool preFetch(std::string sql, bool store);
-	bool changeData(std::string sql);
+	bool changeData(std::string sql, bool reportZero);
 	std::string _userid;
 	std::string _passwd;
 	std::string _dBase;
