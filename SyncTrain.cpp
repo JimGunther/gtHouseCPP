@@ -18,7 +18,7 @@
 *********************************************************************************************************************************/
 
 #define NUM_COLS 7
-#define PATH "/home/mis/Documents/Sentinel/CPP/"
+#define PATH "/home/MIS/Documents/Sentinel/CPP/"
 
 // Global variables
 std::string _userid, _passwd, _dBase, _errMsg;
