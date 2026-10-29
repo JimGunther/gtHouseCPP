@@ -13,12 +13,12 @@
 * SyncTrain.cpp: utility app for Sentinel project. Reads the contents of "Trained.txt" and synchronizes the contents with the 
 * MachTrain database table
 * Version 0.7
-* Last updated 26/10/2026 16:10
+* Last updated 28/10/2026 16:46
 * Author: Jim Gunther
 *********************************************************************************************************************************/
 
 #define NUM_COLS 7
-#define PATH "/home/MIS/Documents/Sentinel/CPP/"
+#define PATH "/home/MIS/Sentinel/CPP/"
 
 // Global variables
 std::string _userid, _passwd, _dBase, _errMsg;
@@ -117,11 +117,19 @@ bool addMachTrain(int memID, int mchNo) {
 	return changeData(sql);
 }
 
+bool emptyMachTrain() {
+	//emptyMachTrain(): deletes all rows from the MachTrain table
+	// returns: true if added successfully, false otherwise
+	std::string sql = "DELETE FROM MachTrain";
+	return changeData(sql);
+}
+
  bool readMachLookup() {
     //readMachLookup(): reads machine numbers CSV and converts to a (key,value) map
 	// Parameters: none
 	// returns: bool: true if successfully read and updated
-	std::ifstream fLookup("/home/mis/Documents/Sentinel/CPP/Machines.csv");
+	std::string path = std::string(PATH) + std::string("Machines.csv");
+	std::ifstream fLookup(path);
 	std::string comma = ",";
 	if (fLookup.is_open()) {
 		std::string line, k;
@@ -297,22 +305,20 @@ bool readTrained(std::string fileName, bool bNoWarn) {
 //				std::cout << sq << std::endl;
 				if (sq > 0) { // line is valid
 					if (exists(memID, machNo)) prevCount++;
-					else {
-						trained t;
-						t.mchNo = machNo;
-						t.memID = memID;
-						mt.push_back(t);
-					}
-				}
+					trained t;
+					t.mchNo = machNo;
+					t.memID = memID;
+					mt.push_back(t);
+				}	
 			}
 			addLogEntry("", false, false, std::to_string(prevCount) + " entries already exist");
 			if (errorCount > 0) {
 				addLogEntry("", false, false, "Please correct errors in " + std::to_string(errorCount) + " entries and try again");
 			}
 			else {
+				emptyMachTrain();
 				for (const trained& t : mt) {
-					addMachTrain(t.memID, t.mchNo);
-					newCount++;
+					if (addMachTrain(t.memID, t.mchNo)) newCount++;
 				}
 				addLogEntry("", false, false, std::to_string(newCount) + " new entries added");
 			}
