@@ -13,7 +13,7 @@
 * SyncTrain.cpp: utility app for Sentinel project. Reads the contents of "Trained.txt" and synchronizes the contents with the 
 * MachTrain database table
 * Version 0.7
-* Last updated 28/10/2026 16:46
+* Last updated 10/11/2026 17:47
 * Author: Jim Gunther
 *********************************************************************************************************************************/
 
@@ -62,17 +62,26 @@ bool preFetch(std::string sql, bool store) { // common MySQL code befores fetchi
 }
 
 bool changeData(std::string sql) {  // helper method for all "Data change" MySQL queries
-	if (!openDBConnection()) return false;
-	int status = mysql_real_query(_myConn, sql.c_str(), sql.length());
-	if (status != 0) {
-		std::string s(mysql_error(_myConn));
-        _errMsg = s;
-		std::cout << s << std::endl;
+	
+	try {
+		if (!openDBConnection()) return false;
+		int status = mysql_real_query(_myConn, sql.c_str(), sql.length());
+		if (status != 0) {
+			std::string s(mysql_error(_myConn));
+			_errMsg = s;
+			std::cout << s << std::endl;
+			mysql_close(_myConn);
+			return false;
+		}
 		mysql_close(_myConn);
-		return false;
+		return true;
 	}
-	mysql_close(_myConn);
-    return true;
+	catch (std::exception &ex) {
+		std::cout << ex.what() << std::endl;
+        std::cout << "Error in changeData()" << std::endl;
+        return false;
+	}
+
 }
 
 bool exists(int memID, int mchNo) {
@@ -108,6 +117,13 @@ bool shedderExists(int memID) {
 	return false;
 }
 
+bool emptyMachTrain() {
+	//emptyMachTrain(): deletes all rows from the MachTrain table
+	// returns: true if added successfully, false otherwise
+	std::string sql = "DELETE FROM MachTrain";
+	return changeData(sql);
+}
+
 bool addMachTrain(int memID, int mchNo) {
 	//addMachTrain(): adds a row to the MachTrain table//parameters:
 	//memID: int :shed member's ID number
@@ -117,19 +133,11 @@ bool addMachTrain(int memID, int mchNo) {
 	return changeData(sql);
 }
 
-bool emptyMachTrain() {
-	//emptyMachTrain(): deletes all rows from the MachTrain table
-	// returns: true if added successfully, false otherwise
-	std::string sql = "DELETE FROM MachTrain";
-	return changeData(sql);
-}
-
  bool readMachLookup() {
     //readMachLookup(): reads machine numbers CSV and converts to a (key,value) map
 	// Parameters: none
 	// returns: bool: true if successfully read and updated
-	std::string path = std::string(PATH) + std::string("Machines.csv");
-	std::ifstream fLookup(path);
+	std::ifstream fLookup("/home/MIS/Sentinel/CPP/Machines.csv");
 	std::string comma = ",";
 	if (fLookup.is_open()) {
 		std::string line, k;
@@ -141,37 +149,10 @@ bool emptyMachTrain() {
 			val = stoi(line.substr(ix + 1));
 			machLookup.insert({k, val});
 		}
+		//printf( "Machine ID : %i %s\n", val, line);
 		fLookup.close();
 	}
 	return true;
-}
-
-int readOldMaxSeq() { // method to calculate the maximum sequence number - known to be the last value as previous files validated (seq in ascending order)
-	try {
-		std::string line, sq;
-		size_t ix;
-		int rv = 0;
-		std::ifstream fOld("Trained.txt");
-		if (fOld.is_open()) {
-			while (std::getline(fOld, line)) {
-				ix = line.find(",");
-				if (ix < 0) return 0;
-				sq = line.substr(0, ix); // we know format is OK
-				rv = std::stoi(sq);
-			}
-			fOld.close();
-			return rv;
-		}
-		else {
-			std::cout << "Failed to open Trained.txt file" << std::endl;
-			return 0;
-		}
-	}
-	catch (...) {
-        std::cout << "Error in reading Trained.txt file" << std::endl;
-        return 0;
-	}
-	return 0;
 }
 
 void addLogEntry(std::string prefix, bool bError, bool bNoWarn, std::string text) {
@@ -180,7 +161,7 @@ void addLogEntry(std::string prefix, bool bError, bool bNoWarn, std::string text
 		errorCount++;
 		std::cout << "Error: ";
 	}
-	else if (!bNoWarn) std::cout << "Warn:  ";
+	else if (!bNoWarn && (prefix.length() > 0)) std::cout << "Warn:  ";
 	if (bError || !bNoWarn) std::cout << text << std::endl;
 }
 
@@ -294,7 +275,7 @@ bool readTrained(std::string fileName, bool bNoWarn) {
 	// Read new file with machine "trained" permissions
     try {
 		std::string sPath = PATH;
-		//std::cout << sPath << std::endl;
+		//std::cout << sPath << fileName << std::endl;
 		std::ifstream fTrained(sPath + fileName);
 		int sq = 0, prevCount = 0, newCount = 0; 
 		std::vector<trained> mt;
@@ -309,16 +290,19 @@ bool readTrained(std::string fileName, bool bNoWarn) {
 					t.mchNo = machNo;
 					t.memID = memID;
 					mt.push_back(t);
-				}	
+				}
 			}
-			addLogEntry("", false, false, std::to_string(prevCount) + " entries already exist");
+			addLogEntry("", false, false, std::to_string(prevCount) + " entries in previous " + fileName);
+			addLogEntry("", false, false, std::to_string(mt.size()) + " entries in uploaded file");
 			if (errorCount > 0) {
 				addLogEntry("", false, false, "Please correct errors in " + std::to_string(errorCount) + " entries and try again");
 			}
 			else {
 				emptyMachTrain();
 				for (const trained& t : mt) {
-					if (addMachTrain(t.memID, t.mchNo)) newCount++;
+					//std::cout << "#";
+					addMachTrain(t.memID, t.mchNo);
+					newCount++;
 				}
 				addLogEntry("", false, false, std::to_string(newCount) + " new entries added");
 			}
